@@ -1,5 +1,7 @@
 import { useApp } from "../context/AppContext";
 import SummaryCard from "../components/SummaryCard";
+import TrendChart from "../components/charts/TrendChart";
+import DonutChart from "../components/charts/DonutChart";
 
 function formatINR(n) {
   return "₹" + Math.abs(n).toLocaleString("en-IN");
@@ -76,6 +78,14 @@ export default function Dashboard() {
           changeDir={parseFloat(savingsRate) > 20 ? "up" : "down"}
           accentColor="#9b72ff"
         />
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="lg:col-span-2">
+          <TrendChart />
+        </div>
+        <div>
+          <DonutChart />
+        </div>
       </div>
     </div>
   );

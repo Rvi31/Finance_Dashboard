@@ -1,3 +1,5 @@
+import { useApp } from "../context/AppContext";
+
 const navItems = [
   { id: "dashboard", label: "Overview", icon: "⬡" },
   { id: "transactions", label: "Transactions", icon: "⊞" },
@@ -5,6 +7,8 @@ const navItems = [
 ];
 
 export default function Sidebar({ activePage, onNavigate }) {
+  const { state, dispatch } = useApp();
+
   return (
     <aside className="fixed top-0 left-0 h-screen w-52 bg-[#16161c] border-r border-[#2e2e3e] flex flex-col z-10">
       <div className="px-5 py-6 border-b border-[#2e2e3e]">
@@ -36,10 +40,23 @@ export default function Sidebar({ activePage, onNavigate }) {
         <div className="text-[10px] uppercase tracking-widest text-[#5a5a78] mb-2">
           Role
         </div>
-        <select className="w-full bg-[#1e1e28] border border-[#2e2e3e] text-white text-xs rounded-lg px-3 py-2 cursor-pointer outline-none">
+        <select
+          value={state.role}
+          onChange={(e) =>
+            dispatch({ type: "SET_ROLE", payload: e.target.value })
+          }
+          className="w-full bg-[#1e1e28] border border-[#2e2e3e] text-white text-xs rounded-lg px-3 py-2 cursor-pointer outline-none"
+        >
           <option value="admin">Admin</option>
           <option value="viewer">Viewer</option>
         </select>
+        <div
+          className={`mt-2 inline-flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full font-medium
+          ${state.role === "admin" ? "bg-[#1a2a55] text-[#5b8fff]" : "bg-[#1e1e28] text-[#9090b0]"}`}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-current" />
+          {state.role === "admin" ? "Admin" : "Viewer"}
+        </div>
       </div>
     </aside>
   );
