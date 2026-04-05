@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 import { initialTransactions } from "../data/transactions";
 
 const AppContext = createContext(null);
@@ -29,13 +29,30 @@ function reducer(state, action) {
   }
 }
 
-const initialState = {
-  transactions: initialTransactions,
-  role: "admin",
-};
+function loadState() {
+  try {
+    const txns = localStorage.getItem("fintrack_transactions");
+    const role = localStorage.getItem("fintrack_role");
+    return {
+      transactions: txns ? JSON.parse(txns) : initialTransactions,
+      role: role || "admin",
+    };
+  } catch {
+    return { transactions: initialTransactions, role: "admin" };
+  }
+}
 
 export function AppProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, undefined, loadState);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "fintrack_transactions",
+      JSON.stringify(state.transactions),
+    );
+    localStorage.setItem("fintrack_role", state.role);
+  }, [state]);
+
   return (
     <AppContext.Provider value={{ state, dispatch }}>
       {children}
