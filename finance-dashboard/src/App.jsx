@@ -3,6 +3,7 @@ import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
 import TransactionModal from "./components/TransactionModal";
+import Insights from "./pages/Insights";
 export default function App() {
   const [activePage, setActivePage] = useState("dashboard");
   const [modalOpen, setModalOpen] = useState(false);
@@ -27,9 +28,7 @@ export default function App() {
       {activePage === "transactions" && (
         <Transactions onAdd={openAdd} onEdit={openEdit} />
       )}
-      {activePage === "insights" && (
-        <div className="text-white">Insights — coming Day 3</div>
-      )}
+      {activePage === "insights" && <Insights />}
 
       {modalOpen && (
         <TransactionModal editData={editData} onClose={closeModal} />
