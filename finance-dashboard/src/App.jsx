@@ -24,7 +24,7 @@ export default function App() {
 
   return (
     <Layout activePage={activePage} onNavigate={setActivePage}>
-      {activePage === "dashboard" && <Dashboard />}
+      {activePage === "dashboard" && <Dashboard onAdd={openAdd} />}
       {activePage === "transactions" && (
         <Transactions onAdd={openAdd} onEdit={openEdit} />
       )}

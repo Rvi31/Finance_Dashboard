@@ -7,7 +7,7 @@ function formatINR(n) {
   return "₹" + Math.abs(n).toLocaleString("en-IN");
 }
 
-export default function Dashboard() {
+export default function Dashboard({ onAdd }) {
   const { state } = useApp();
   const { transactions } = state;
 
@@ -37,9 +37,29 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="mb-7">
-        <h1 className="text-2xl font-semibold">Overview</h1>
-        <p className="text-[#9090b0] text-sm mt-1">Your financial snapshot</p>
+      <div className="flex items-center justify-between mb-7">
+        <div>
+          <h1 className="text-2xl font-semibold">Overview</h1>
+          <p className="text-[#9090b0] text-sm mt-1">Your financial snapshot</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="text-xs font-mono text-[#5a5a78] bg-[#1e1e28] border border-[#2e2e3e] px-3 py-2 rounded-lg">
+            {new Date().toLocaleDateString("en-IN", {
+              weekday: "short",
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+          </div>
+          {state.role === "admin" && (
+            <button
+              onClick={onAdd}
+              className="px-4 py-2 text-xs font-medium rounded-lg bg-[#5b8fff] text-white hover:opacity-85 transition-opacity"
+            >
+              + Add Transaction
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
