@@ -3,7 +3,6 @@ import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
 import TransactionModal from "./components/TransactionModal";
-
 export default function App() {
   const [activePage, setActivePage] = useState("dashboard");
   const [modalOpen, setModalOpen] = useState(false);
